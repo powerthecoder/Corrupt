@@ -14,7 +14,7 @@ import asyncio
 from datetime import datetime
 import json
 
-with open("corrupt_token.json", "r") as f:
+with open("token.json", "r") as f:
     data = json.load(f)
 
 d_token = data['Token']
@@ -24,12 +24,16 @@ Token = str(d_token)
 
 
 cogs = [
-    ''
+    'cogs.admin',
+    'cogs.events',
+    'cogs.general',
+    'cogs.moderation',
+    'cogs.ticket',
 ]
 
 class client(commands.AutoShardedBot):
     def __init__(self):
-        prefix_list = ()
+        prefix_list = ('-')
         super().__init__(command_prefix=prefix_list, case_insensitive=True)
         self.red = 0xff0000
         self.devs = [

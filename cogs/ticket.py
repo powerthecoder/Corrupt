@@ -1,7 +1,10 @@
 import os
+import os
 import sys
 import time
 import random
+from random import randrange
+import dbl
 import discord
 from discord.ext import commands
 from discord.ext import tasks
@@ -11,6 +14,21 @@ from discord.ext.commands import MissingPermissions
 from discord.utils import find
 from discord.utils import get
 import asyncio
+import youtube_dl
+import requests
+from requests import get
+import logging
+from datetime import datetime
+from twilio.rest import Client
+import matplotlib
+import json
+from discord.ext import menus
+from bs4 import BeautifulSoup
+from requests_html import HTMLSession
+from requests_html import AsyncHTMLSession
+import pyppdf.patch_pyppeteer
+import lavalink
+from discord import Embed
 
 class Main(commands.Cog):
     def __init__(self, client):
