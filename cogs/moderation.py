@@ -73,7 +73,7 @@ class Main(commands.Cog):
         author_id = ctx.message.author.id
         strike_channel = self.client.get_channel(727435494555910265)
 
-        with open("corrupt_faction.json", "r") as f:
+        with open("db_faction.json", "r") as f:
             factions = json.load(f)
         target = str(faction)
         if not f'{target}' in factions:
@@ -87,7 +87,7 @@ class Main(commands.Cog):
             factions[f'{target}'] = warnam
             embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** {warnam} \n**Strike By:** {author}", color=0xf20000)
             await strike_channel.send(embed=embed)
-        with open("corrupt_faction.json", "w") as f:
+        with open("db_faction.json", "w") as f:
             json.dump(factions, f)
 
 

@@ -59,10 +59,17 @@ class Main(commands.Cog):
 
     @commands.command()
     async def snipe(self, ctx):
-        with open("corrupt_snipe.json", "r") as f:
+        with open("db_snipe.json", "r") as f:
             data = json.load(f)
         snipe = data["message"]
         embed=discord.Embed(title="Message Snipe", description=f"**Latest Deleted Message** \n\n{snipe}")
+        await ctx.send(embed=embed)
+    
+    @commands.command()
+    async def about(self, ctx):
+        author = ctx.message.author.name
+        embed=discord.Embed(title="About", description="**Version:** 1.0 \n**Developer:** <@255876083918831616> \n**Owner:** <@226573983783321611>", color=0xff0000)
+        embed.add_field(name="Website: ", value="https://powerthecoder.xyz", inline=False)
         await ctx.send(embed=embed)
 
 def setup(client):

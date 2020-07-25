@@ -70,12 +70,12 @@ class Main(commands.Cog):
     async def on_message_delete(self, message):
         # Message = message.content
         # Author = message.author.mention
-        with open("corrupt_snipe.json", "r") as f:
+        with open("db_snipe.json", "r") as f:
             data = json.load(f)
         msg = message.content
         authr = message.author.mention
         data['message'] = f"**Message**: {msg} \n**Author:** {authr}"
-        with open("corrupt_snipe.json", "w") as f:
+        with open("db_snipe.json", "w") as f:
             json.dump(data, f)
 
 
