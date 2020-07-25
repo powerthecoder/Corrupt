@@ -38,7 +38,7 @@ from discord import Embed
 '''
 Name: Corrupt Network
 Prefix: -
-color=0xf20000
+color=0xff0000
 
 * Auto welcome msgs 
 Blacklist words
@@ -206,7 +206,7 @@ async def adminhelp(ctx):
 @has_permissions(manage_messages=True)
 async def purge(ctx, arg):            
     author = ctx.message.author.name                                                                            
-    embed=discord.Embed(title=f"Clearing...", description=f"Clearing {arg}", color=0xf20000)
+    embed=discord.Embed(title=f"Clearing...", description=f"Clearing {arg}", color=0xff0000)
     await ctx.send(embed=embed)
     amount1 = int(arg)
     time.sleep(1)
@@ -227,14 +227,14 @@ async def warn(ctx, user_name:discord.Member, *,args=None):
     if not f'{target}' in users:
         users[f'{target}'] = {}
         users[f'{target}'] = 1
-        embed=discord.Embed(title="Warning", description=f"**Warned:** {user_name} \n**Reason:** {args} \n**Total Warns:** 1 \n**Warned By:** {author}", color=0xf20000)
+        embed=discord.Embed(title="Warning", description=f"**Warned:** {user_name} \n**Reason:** {args} \n**Total Warns:** 1 \n**Warned By:** {author}", color=0xff0000)
         await ctx.send(f"<@{userid}>")
         await ctx.send(embed=embed)
     else:
         warnam = int(users[f'{target}'])
         warnam += 1
         users[f'{target}'] = warnam
-        embed=discord.Embed(title="Warning", description=f"**Warned:** {user_name} \n**Reason:** {args} \n**Total Warns:** {warnam} \n**Warned By:** {author}", color=0xf20000)
+        embed=discord.Embed(title="Warning", description=f"**Warned:** {user_name} \n**Reason:** {args} \n**Total Warns:** {warnam} \n**Warned By:** {author}", color=0xff0000)
         await ctx.send(f"<@{userid}>")
         await ctx.send(embed=embed)
     with open("corrupt_ticket.json", "w") as f:
@@ -244,7 +244,7 @@ async def warn(ctx, user_name:discord.Member, *,args=None):
 @has_permissions(kick_members=True)
 async def kick(ctx, user_name:discord.Member, *,args=None):
     author = ctx.author.name
-    embed=discord.Embed(title="Player Kicked", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Kicked By:** {author}", color=0xf20000)
+    embed=discord.Embed(title="Player Kicked", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Kicked By:** {author}", color=0xff0000)
     await user_name.kick(reason=args)
     await ctx.send(embed=embed)
 
@@ -252,7 +252,7 @@ async def kick(ctx, user_name:discord.Member, *,args=None):
 @has_permissions(ban_members=True)
 async def ban(ctx, user_name:discord.Member, *,args=None):
     author = ctx.author.name
-    embed=discord.Embed(title="Player Banned", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Banned By:** {author}", color=0xf20000)
+    embed=discord.Embed(title="Player Banned", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Banned By:** {author}", color=0xff0000)
     await user_name.ban(reason=args)
     await ctx.send(embed=embed)
 
@@ -270,7 +270,7 @@ async def mute(ctx, user_name:discord.Member, args=None):
     author = ctx.author.name
     role = discord.utils.get(user_name.guild.roles, name="Muted")
     await Member.add_roles(user_name, role)
-    embed=discord.Embed(title="Player Muted", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Muted By:** {author}", color=0xf20000)
+    embed=discord.Embed(title="Player Muted", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Muted By:** {author}", color=0xff0000)
     await ctx.send(embed=embed)
 
 @client.command(aliases=['new'])
@@ -310,7 +310,7 @@ async def close(ctx):
     author = str(author2.lower())
     
     support_channel = discord.utils.get(guild.channels, name=author, type=discord.ChannelType.text)
-    embed=discord.Embed(title=f"Ticket closing {author}", description=f"If you need any more help please do `-ticket` ", color=0xffbb1c)
+    embed=discord.Embed(title=f"Ticket closing {author}", description=f"If you need any more help please do `-ticket` ", color=0xff0000)
     embed.set_author(name="Support Ticket")
     await ctx.send(f"<@{author_id}>")
     await ctx.send(embed=embed)
@@ -327,7 +327,7 @@ async def close_s(ctx, user_name:discord.Member):
 
     channel_id = discord.utils.get(guild.channels, name=user_name)
     channel = client.get_channel(channel_id)
-    embed=discord.Embed(title=f"{user_name} Deleting Ticket", description=f"If you need any more assistance please do `-ticket`", color=0xffbb1c)
+    embed=discord.Embed(title=f"{user_name} Deleting Ticket", description=f"If you need any more assistance please do `-ticket`", color=0xff0000)
     embed.set_author(name="Support Ticket")
     await ctx.send(f"@{user_name}")
     await ctx.send(embed=embed)
@@ -363,7 +363,7 @@ async def suggest(ctx, *,args=None):
 @has_permissions(administrator=True)
 async def giveaway(ctx, *,args):
     author = ctx.message.author.name
-    embed=discord.Embed(title=args, description="React with 🎉 to enter!", color=0xffbb1c)
+    embed=discord.Embed(title=args, description="React with 🎉 to enter!", color=0xff0000)
     embed.set_author(name="🎉 GIVEAWAY 🎉")
     giveaway_channel = client.get_channel(719442620513779793)
     message = await giveaway_channel.send(embed=embed)
@@ -373,7 +373,7 @@ async def giveaway(ctx, *,args):
 @has_permissions(administrator=True)
 async def giveaway_tag(ctx, *,args):
     author = ctx.message.author.name
-    embed=discord.Embed(title=args, description="React with 🎉 to enter!", color=0xffbb1c)
+    embed=discord.Embed(title=args, description="React with 🎉 to enter!", color=0xff0000)
     embed.set_author(name="🎉 GIVEAWAY 🎉")
     giveaway_channel = client.get_channel(719442620513779793)
     await giveaway_channel.send("@everyone")
@@ -397,7 +397,7 @@ async def giveaway_winner(ctx, arg1):
     #await ctx.send(f"users: {', '.join(user.name for user in users)}")
     #await ctx.send(f"Winner: **{random.choice(user_list)}**")
 
-    embed=discord.Embed(title="Giveaway Winner", description=f"**Users:** {', '.join(user.name for user in users)}  \n**Winner:** {random.choice(user_list)}", color=0xffbb1c)
+    embed=discord.Embed(title="Giveaway Winner", description=f"**Users:** {', '.join(user.name for user in users)}  \n**Winner:** {random.choice(user_list)}", color=0xff0000)
     embed.set_author(name="🎉 GIVEAWAY WINNER 🎉")
     await ctx.send(embed=embed)
 
@@ -457,6 +457,9 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
     author_id = ctx.author.id
 
     if(str(rank.lower()) == "helper"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Helper \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Helper)
         await Member.remove_roles(user_name, Jr_Moderator)
@@ -467,10 +470,11 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Helper \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "jr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Jr Moderator \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Jr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -481,10 +485,11 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Jr Moderator \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Moderator \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -495,10 +500,11 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Moderator \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "sr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Sr Moderator \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Sr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -509,11 +515,12 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Sr Moderator \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "admin"):
         await ctx.channel.purge(limit=1)
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Admin \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await Member.add_roles(user_name, Administrator)
         await Member.remove_roles(user_name, Helper)
         await Member.remove_roles(user_name, Moderator)
@@ -523,10 +530,10 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Admin \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
     if(str(rank.lower()) == "trial sr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Sr Moderator \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Sr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -537,10 +544,11 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Sr Moderator \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "trial mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Moderator \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -551,10 +559,11 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Jr_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Moderator \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "trial jr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Jr Moderator \n**Promotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Jr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -565,9 +574,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Jr Moderator \n**Promotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     else:
         embed=discord.Embed(title="Promotion/Demotion Help Menu", description="Command is `-promote/demote @user <rank>` \n\n\nhelper \njr mod \nmod \nsr mod \nadmin \ntrial sr mod \ntrial mod \ntrial jr mod")
         await ctx.send(embed=embed)
@@ -589,6 +596,9 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
     author_id = ctx.author.id
 
     if(str(rank.lower()) == "helper"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Helper \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Helper)
         await Member.remove_roles(user_name, Jr_Moderator)
@@ -599,10 +609,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Helper \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "jr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Jr Moderator \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Jr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -613,10 +624,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Jr Moderator \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Moderator \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -627,10 +639,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Moderator \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "sr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Sr Moderator \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Sr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -641,10 +654,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Sr Moderator \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "admin"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Administrator  \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Administrator)
         await Member.remove_roles(user_name, Helper)
@@ -655,10 +669,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Administrator  \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "trial sr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Trial Sr Moderator \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Sr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -669,10 +684,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Trial Sr Moderator \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "trial mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Trial Moderator \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -683,10 +699,11 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Jr_Moderator)
         await Member.remove_roles(user_name, Trial_Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Trial Moderator \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     if(str(rank.lower()) == "trial jr mod"):
+        promotion_channel = client.get_channel(725645441357840406)
+        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Trial Jr Moderator \n**Demotor:** {author}")
+        await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Jr_Moderator)
         await Member.remove_roles(user_name, Helper)
@@ -697,9 +714,7 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         await Member.remove_roles(user_name, Trial_Moderator)
         await Member.remove_roles(user_name, Jr_Moderator)
         
-        promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Demotion", description=f"Demoted {user_name}\n\n**New Rank:** Trial Jr Moderator \n**Demotor:** {author}")
-        await promotion_channel.send(embed=embed)
+        
     else:
         embed=discord.Embed(title="Promotion/Demotion Help Menu", description="Command is `-promote/demote @user <rank>` \n\n\nhelper \njr mod \nmod \nsr mod \nadmin \ntrial sr mod \ntrial mod \ntrial jr mod")
         await ctx.send(embed=embed)
@@ -717,13 +732,13 @@ async def strike(ctx, faction, *,args):
     if not f'{target}' in factions:
         factions[f'{target}'] = {}
         factions[f'{target}'] = 1
-        embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** 1 \n**Strike By:** {author}", color=0xf20000)
+        embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** 1 \n**Strike By:** {author}", color=0xff0000)
         await strike_channel.send(embed=embed)
     else:
         warnam = int(factions[f'{target}'])
         warnam += 1
         factions[f'{target}'] = warnam
-        embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** {warnam} \n**Strike By:** {author}", color=0xf20000)
+        embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** {warnam} \n**Strike By:** {author}", color=0xff0000)
         await strike_channel.send(embed=embed)
     with open("corrupt_faction.json", "w") as f:
         json.dump(factions, f)
