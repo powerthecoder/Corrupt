@@ -89,6 +89,22 @@ class Main(commands.Cog):
             await strike_channel.send(embed=embed)
         with open("db_faction.json", "w") as f:
             json.dump(factions, f)
+    
+    @commands.command(pass_context=True)
+    @has_permissions(administrator=True)
+    async def fire(self, ctx, user_name:discord.Member, *,args=None):
+        for i in user_name.guild.roles:
+            try:
+                role = discord.utils.get(user_name.guild.roles, name=str(i))
+                await Member.remove_roles(user_name, role)
+            except:
+                pass
+            pass
+        member_role = discord.utils.get(user_name.guild.roles, name="Member")
+        await Member.add_roles(user_name, member_role)
+        await user_name.edit(nick=None)
+        embed=discord.Embed(title=f"Fired {user_name}", description=f"{user_name} has been striped of all roles")
+        await ctx.send(embed=embed)
 
 
 def setup(client):

@@ -813,6 +813,7 @@ async def snipe(ctx):
     await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
+@has_permissions(administrator=True)
 async def fire(ctx, user_name:discord.Member, *,args=None):
     for i in user_name.guild.roles:
         try:
