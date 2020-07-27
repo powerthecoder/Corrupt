@@ -73,7 +73,7 @@ class Main(commands.Cog):
         author_id = ctx.message.author.id
         strike_channel = self.client.get_channel(727435494555910265)
 
-        with open("db_faction.json", "r") as f:
+        with open("/root/DiscordGit/Corrupt/cogs/db_faction.json", "r") as f:
             factions = json.load(f)
         target = str(faction)
         if not f'{target}' in factions:

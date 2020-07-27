@@ -63,19 +63,18 @@ class Main(commands.Cog):
             await message.delete()
         elif("fagot" in message.content.lower()):
             await message.delete()
-        await self.client.process_commands(message)
+        #await self.client.process_commands(message)
 
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
         # Message = message.content
         # Author = message.author.mention
-        with open("db_snipe.json", "r") as f:
+        with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "r") as f:
             data = json.load(f)
-        msg = message.content
         authr = message.author.mention
-        data['message'] = f"**Message**: {msg} \n**Author:** {authr}"
-        with open("db_snipe.json", "w") as f:
+        data['message'] = f"**Message**: {message.content} \n**Author:** {authr}"
+        with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "w") as f:
             json.dump(data, f)
 
 

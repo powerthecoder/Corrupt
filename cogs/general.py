@@ -59,7 +59,7 @@ class Main(commands.Cog):
 
     @commands.command()
     async def snipe(self, ctx):
-        with open("db_snipe.json", "r") as f:
+        with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "r") as f:
             data = json.load(f)
         snipe = data["message"]
         embed=discord.Embed(title="Message Snipe", description=f"**Latest Deleted Message** \n\n{snipe}")

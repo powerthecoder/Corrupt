@@ -64,7 +64,6 @@ class Main(commands.Cog):
             await channel.send(f"<@{author_id}>")
             await channel.send(embed=embed)
 
-
     @commands.command()
     async def close(self, ctx):
         author2 = ctx.author.name
@@ -73,14 +72,13 @@ class Main(commands.Cog):
         author = str(author2.lower())
         
         support_channel = discord.utils.get(guild.channels, name=author, type=discord.ChannelType.text)
-        embed=discord.Embed(title=f"Ticket closing {author}", description=f"If you need any more help please do `-ticket` ", color=0xffbb1c)
+        embed=discord.Embed(title=f"Ticket closing {author}", description=f"If you need any more help please do `-ticket` ", color=0xff0000)
         embed.set_author(name="Support Ticket")
         await ctx.send(f"<@{author_id}>")
         await ctx.send(embed=embed)
         await asyncio.sleep(5)
         await support_channel.delete()
         
-
     @commands.command()
     @has_permissions(manage_channels=True)
     async def close_s(self, ctx, user_name:discord.Member):
@@ -91,7 +89,7 @@ class Main(commands.Cog):
 
         channel_id = discord.utils.get(guild.channels, name=user_name)
         channel = self.client.get_channel(channel_id)
-        embed=discord.Embed(title=f"{user_name} Deleting Ticket", description=f"If you need any more assistance please do `-ticket`", color=0xffbb1c)
+        embed=discord.Embed(title=f"{user_name} Deleting Ticket", description=f"If you need any more assistance please do `-ticket`", color=0xff0000)
         embed.set_author(name="Support Ticket")
         await ctx.send(f"@{user_name}")
         await ctx.send(embed=embed)
@@ -99,7 +97,7 @@ class Main(commands.Cog):
         await ctx.channel.delete()
 
 
-    @commands.command(aliases=['report', 'Sticket', 'Report'])
+    @commands.command(aliases=['report'])
     @has_permissions(manage_messages=True)
     async def sticket(self, ctx, *,args=None):
         author = ctx.author.name
@@ -159,6 +157,8 @@ class Main(commands.Cog):
         notify_msg = await channel_test.send("@everyone")
         asyncio.sleep(5)
         await notify_msg.delete()
+
+
 
 def setup(client):
     client.add_cog(Main(client))
