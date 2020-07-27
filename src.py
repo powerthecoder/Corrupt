@@ -812,6 +812,24 @@ async def snipe(ctx):
     embed=discord.Embed(title="Message Snipe", description=f"**Latest Deleted Message** \n\n{snipe}")
     await ctx.send(embed=embed)
 
+@client.command(pass_context=True)
+async def fire(ctx, user_name:discord.Member, *,args=None):
+    for i in user_name.guild.roles:
+        try:
+            role = discord.utils.get(user_name.guild.roles, name=str(i))
+            await Member.remove_roles(user_name, role)
+        except:
+            pass
+        pass
+    member_role = discord.utils.get(user_name.guild.roles, name="Member")
+    await Member.add_roles(user_name, member_role)
+    await user_name.edit(nick=None)
+    embed=discord.Embed(title=f"Fired {user_name}", description=f"{user_name} has been striped of all roles")
+    await ctx.send(embed=embed)
+
+
+
+
 
 
 client.loop.create_task(ad())
