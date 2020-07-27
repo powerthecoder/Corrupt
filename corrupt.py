@@ -152,7 +152,7 @@ async def close_s(ctx, user_name:discord.Member):
     await ctx.channel.delete()
 
 
-@client.command(aliases=['report', 'Sticket', 'Report'])
+@client.command(aliases=['report'])
 @has_permissions(manage_messages=True)
 async def sticket(ctx, *,args=None):
     author = ctx.author.name
