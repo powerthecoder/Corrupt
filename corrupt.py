@@ -95,7 +95,7 @@ async def ad():
 
 @client.command(pass_context=True)
 async def reload(ctx, cog=None):
-    if not ctx.author.id in client.devs:
+    if not int(ctx.author.id) in client.devs:
         return
     if not cog:
         return
