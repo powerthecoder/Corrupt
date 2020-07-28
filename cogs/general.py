@@ -46,7 +46,7 @@ class Main(commands.Cog):
         embed.add_field(name="`-giveaway <reward>`", value="To create a giveaway message", inline=False)
         embed.add_field(name="`-giveaway_tag <reward>`", value="To create a giveaway message **(WILL TAG EVERYONE)**", inline=False)
         embed.add_field(name="`-giveaway_winner <msg ID>`", value="To auto roll a winner from a giveaway", inline=False)
-        embed.add_field(name="`-giveaway_role <role> <msg ID>", value="To select a winner based on a role", inline=False)
+        embed.add_field(name="`-giveaway_role <role> <msg ID>`", value="To select a winner based on a role", inline=False)
         embed.add_field(name="`-say <args>`", value="To make the bot text as you", inline=False)
         embed.add_field(name="`-say_f <args>`", value="To make the bot text in embeds as you", inline=False)
         embed.add_field(name="`-help`", value="To open the help menu", inline=False)
@@ -54,6 +54,7 @@ class Main(commands.Cog):
         embed.add_field(name="`-promote @user <rank>`", value="To promote someone", inline=False)
         embed.add_field(name="`-demote @user <rank>`", value="To demote someone", inline=False)
         embed.add_field(name="`-strike <faction> <reason>`", value="To give a strike to a faction", inline=False)
+        embed.add_field(name="`-fire @user`", value="To strip all roles and reset nick name of a member", inline=False)
         await ctx.send(embed=embed)
 
 
