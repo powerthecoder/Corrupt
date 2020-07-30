@@ -132,12 +132,12 @@ async def on_message(message):
 async def on_message_delete(message):
     # Message = message.content
     # Author = message.author.mention
-    with open("corrupt_snipe.json", "r") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "r") as f:
         data = json.load(f)
     msg = message.content
     authr = message.author.mention
     data['message'] = f"**Message**: {msg} \n**Author:** {authr}"
-    with open("corrupt_snipe.json", "w") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "w") as f:
         json.dump(data, f)
 
 
@@ -221,7 +221,7 @@ async def warn(ctx, user_name:discord.Member, *,args=None):
     user_id = user_name.id
     userid = str(user_id)
 
-    with open("corrupt_ticket.json", "r") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_ticket.json", "r") as f:
         users = json.load(f)
     target = userid
     if not f'{target}' in users:
@@ -237,7 +237,7 @@ async def warn(ctx, user_name:discord.Member, *,args=None):
         embed=discord.Embed(title="Warning", description=f"**Warned:** {user_name} \n**Reason:** {args} \n**Total Warns:** {warnam} \n**Warned By:** {author}", color=0xff0000)
         await ctx.send(f"<@{userid}>")
         await ctx.send(embed=embed)
-    with open("corrupt_ticket.json", "w") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_ticket.json", "w") as f:
         json.dump(users, f)
 
 @client.command(pass_context=True)
@@ -726,7 +726,7 @@ async def strike(ctx, faction, *,args):
     author_id = ctx.message.author.id
     strike_channel = client.get_channel(727435494555910265)
 
-    with open("corrupt_faction.json", "r") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_faction.json", "r") as f:
         factions = json.load(f)
     target = str(faction)
     if not f'{target}' in factions:
@@ -740,7 +740,7 @@ async def strike(ctx, faction, *,args):
         factions[f'{target}'] = warnam
         embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** {warnam} \n**Strike By:** {author}", color=0xff0000)
         await strike_channel.send(embed=embed)
-    with open("corrupt_faction.json", "w") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_faction.json", "w") as f:
         json.dump(factions, f)
 
 @client.command(aliases=['report', 'Sticket', 'Report'])
@@ -806,7 +806,7 @@ async def sticket(ctx, *,args=None):
 
 @client.command()
 async def snipe(ctx):
-    with open("corrupt_snipe.json", "r") as f:
+    with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "r") as f:
         data = json.load(f)
     snipe = data["message"]
     embed=discord.Embed(title="Message Snipe", description=f"**Latest Deleted Message** \n\n{snipe}")
