@@ -380,26 +380,43 @@ async def giveaway_tag(ctx, *,args):
     message = await giveaway_channel.send(embed=embed)
     await message.add_reaction('🎉')
 
+#@client.command(pass_context=True)
+#@has_permissions(administrator=True)
+#async def giveaway_winner(ctx, arg1):
+#    author = ctx.message.author.name
+    # arg1 = message id
+    # arg2 = channel id
+
+#    message = await ctx.fetch_message(int(arg1))
+#    users = set()
+#    for reaction in message.reactions:
+#        async for user in reaction.users():
+#            users.add(user)
+
+#    user_list = [user.name for user in users]
+    #await ctx.send(f"users: {', '.join(user.name for user in users)}")
+    #await ctx.send(f"Winner: **{random.choice(user_list)}**")
+
+    #embed=discord.Embed(title="Giveaway Winner", description=f"**Users:** {', '.join(user.name for user in users)}  \n**Winner:** {random.choice(user_list)}", color=0xff0000)
+    #embed.set_author(name="🎉 GIVEAWAY WINNER 🎉")
+    #await ctx.send(embed=embed)
+#    await ctx.send(f"**Users:** {', '.join(user.name for user in users)}  \n**Winner:** {random.choice(user_list)}")
+
 @client.command(pass_context=True)
 @has_permissions(administrator=True)
 async def giveaway_winner(ctx, arg1):
     author = ctx.message.author.name
-    # arg1 = message id
-    # arg2 = channel id
-
-    message = await ctx.fetch_message(int(arg1))
-    users = set()
+    msg_id = int(arg1)
+    giveaway_channel = client.get_channel(719442620513779793)
+    message = await giveaway_channel.fetch_message(msg_id)
+    users = []
     for reaction in message.reactions:
         async for user in reaction.users():
-            users.add(user)
-
-    user_list = [user.name for user in users]
-    #await ctx.send(f"users: {', '.join(user.name for user in users)}")
-    #await ctx.send(f"Winner: **{random.choice(user_list)}**")
-
-    embed=discord.Embed(title="Giveaway Winner", description=f"**Users:** {', '.join(user.name for user in users)}  \n**Winner:** {random.choice(user_list)}", color=0xff0000)
+            users.append(user)
+    embed=discord.Embed(title="Giveaway Winner", description=f"Winner: **{random.choice(users)}**", color=0xff0000)
     embed.set_author(name="🎉 GIVEAWAY WINNER 🎉")
     await ctx.send(embed=embed)
+    
 
 @client.command(pass_context=True)
 @has_permissions(administrator=True)
