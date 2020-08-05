@@ -273,6 +273,36 @@ async def mute(ctx, user_name:discord.Member, args=None):
     embed=discord.Embed(title="Player Muted", description=f"**Player:** {user_name} \n**Reason:** {args} \n**Muted By:** {author}", color=0xff0000)
     await ctx.send(embed=embed)
 
+#@client.command(aliases=['new'])
+#async def ticket(ctx, *,args=None):
+#    author = ctx.author.name
+#    author_id = ctx.author.id
+#    author_test = ctx.author
+#    author_dm = client.get_user(author_id)
+#    guild = ctx.guild
+
+#    def check_react(reaction, user):
+#        return str(reaction.emoji) in ["⚔️"] and user != client.user
+
+#    await ctx.channel.purge(limit=1)
+#    category_id = discord.utils.get(guild.categories, name="Tickets")
+
+#    channel = await category_id.create_text_channel(f'{author}')
+#    await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+
+#    embed=discord.Embed(title=f"Support Ticket", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability. \nFaction leader? Click :crossed_swords: \nto claim faction leader role")
+#    await channel.send(f"<@{author_id}>")
+#    msg = await channel.send(embed=embed)
+#    await msg.add_reaction("⚔️")
+#    reaction, user = await client.wait_for('reaction_add', timeout = 100, check=check_react)
+#    if(str(reaction.emoji) == "⚔️"):
+#        embed=discord.Embed(title="Faction Leader", description="You have been given Faction Leader role. \nIf you don't need anything else please do `-close`")
+#        role = discord.utils.get(author_test.guild.roles, name="Faction Leader")
+#        await Member.add_roles(author_test, role)
+#        await channel.send(f"<@{author_id}>")
+#        await channel.send(embed=embed)
+
+
 @client.command(aliases=['new'])
 async def ticket(ctx, *,args=None):
     author = ctx.author.name
@@ -282,8 +312,8 @@ async def ticket(ctx, *,args=None):
     guild = ctx.guild
 
     def check_react(reaction, user):
-        return str(reaction.emoji) in ["⚔️"] and user != client.user
-
+        return str(reaction.emoji) in ["⚔️", "🦸", "😡", "🐛", "💸"] and user != client.user
+    
     await ctx.channel.purge(limit=1)
     category_id = discord.utils.get(guild.categories, name="Tickets")
 
@@ -294,6 +324,10 @@ async def ticket(ctx, *,args=None):
     await channel.send(f"<@{author_id}>")
     msg = await channel.send(embed=embed)
     await msg.add_reaction("⚔️")
+    await msg.add_reaction("🦸")
+    await msg.add_reaction("😡")
+    await msg.add_reaction("🐛")
+    await msg.add_reaction("💸")
     reaction, user = await client.wait_for('reaction_add', timeout = 100, check=check_react)
     if(str(reaction.emoji) == "⚔️"):
         embed=discord.Embed(title="Faction Leader", description="You have been given Faction Leader role. \nIf you don't need anything else please do `-close`")
@@ -301,6 +335,16 @@ async def ticket(ctx, *,args=None):
         await Member.add_roles(author_test, role)
         await channel.send(f"<@{author_id}>")
         await channel.send(embed=embed)
+    #elif(str(reaction.emoji) == "🦸"):
+        #pass
+    #elif(str(reaction.emoji) == "😡"):
+        #pass
+    #elif(str(reaction.emoji) == "🐛"):
+        #pass
+    #elif(str(reaction.emoji) == "💸"):
+        #pass
+
+
 
 @client.command()
 async def close(ctx):
