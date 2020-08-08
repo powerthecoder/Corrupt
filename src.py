@@ -59,7 +59,10 @@ Mod Logs
 '''
 
 client = commands.Bot(command_prefix="-")
-Token = 'NzI1OTQ1NzM1NjM5NTk3MTI3.XvWHsg.0oMmGpzb8wJcVJi6V4fLto2-8WU'
+with open("/root/DiscordGit/Corrupt/token.json", "r") as f:
+    config = json.load(f)
+token = str(config['Token'])
+Token = token
 Version = '1.0'
 client.remove_command("help")
 
@@ -889,6 +892,18 @@ async def fire(ctx, user_name:discord.Member, *,args=None):
     embed=discord.Embed(title=f"Fired {user_name}", description=f"{user_name} has been striped of all roles")
     await ctx.send(embed=embed)
 
+
+@client.command()
+async def count(ctx):
+    with open("/root/DiscordGit/Corrupt/cogs/db_count.json", "r") as f:
+        data = json.load(f)
+    old_number = int(data['Count'])
+    new_total = old_number + 1
+    data['Count'] = {}
+    data['Count'] = int(new_total)
+    with open("/root/DiscordGit/Corrupt/cogs/db_count.json", "w") as f:
+        json.dump(data, f)
+    await ctx.send(int(new_total))
 
 
 
