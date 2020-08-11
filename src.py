@@ -306,80 +306,6 @@ async def mute(ctx, user_name:discord.Member, args=None):
 #        await channel.send(embed=embed)
 
 
-@client.command(aliases=['new'])
-async def ticket(ctx, *,args=None):
-    author = ctx.author.name
-    author_id = ctx.author.id
-    author_test = ctx.author
-    author_dm = client.get_user(author_id)
-    guild = ctx.guild
-
-    def check_react(reaction, user):
-        return str(reaction.emoji) in ["⚔️", "🦸", "😡", "🐛", "💸"] and user != client.user
-    
-    await ctx.channel.purge(limit=1)
-    category_id = discord.utils.get(guild.categories, name="Tickets")
-
-    channel = await category_id.create_text_channel(f'{author}')
-    await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
-
-    embed=discord.Embed(title=f"Support Ticket", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability. \nFaction leader? Click :crossed_swords: \nto claim faction leader role")
-    await channel.send(f"<@{author_id}>")
-    msg = await channel.send(embed=embed)
-    await msg.add_reaction("⚔️")
-    await msg.add_reaction("🦸")
-    await msg.add_reaction("😡")
-    await msg.add_reaction("🐛")
-    await msg.add_reaction("💸")
-    reaction, user = await client.wait_for('reaction_add', timeout = 100, check=check_react)
-    if(str(reaction.emoji) == "⚔️"):
-        embed=discord.Embed(title="Faction Leader", description="You have been given Faction Leader role. \nIf you don't need anything else please do `-close`")
-        role = discord.utils.get(author_test.guild.roles, name="Faction Leader")
-        await Member.add_roles(author_test, role)
-        await channel.send(f"<@{author_id}>")
-        await channel.send(embed=embed)
-    #elif(str(reaction.emoji) == "🦸"):
-        #pass
-    #elif(str(reaction.emoji) == "😡"):
-        #pass
-    #elif(str(reaction.emoji) == "🐛"):
-        #pass
-    #elif(str(reaction.emoji) == "💸"):
-        #pass
-
-
-
-@client.command()
-async def close(ctx):
-    author2 = ctx.author.name
-    author_id = ctx.author.id
-    guild = ctx.guild
-    author = str(author2.lower())
-    
-    support_channel = discord.utils.get(guild.channels, name=author, type=discord.ChannelType.text)
-    embed=discord.Embed(title=f"Ticket closing {author}", description=f"If you need any more help please do `-ticket` ", color=0xff0000)
-    embed.set_author(name="Support Ticket")
-    await ctx.send(f"<@{author_id}>")
-    await ctx.send(embed=embed)
-    await asyncio.sleep(5)
-    await support_channel.delete()
-    
-@client.command()
-@has_permissions(manage_channels=True)
-async def close_s(ctx, user_name:discord.Member):
-    author = ctx.author.name
-    author_id = ctx.author.id
-    author_DM = client.get_user(author_id)
-    guild = ctx.guild
-
-    channel_id = discord.utils.get(guild.channels, name=user_name)
-    channel = client.get_channel(channel_id)
-    embed=discord.Embed(title=f"{user_name} Deleting Ticket", description=f"If you need any more assistance please do `-ticket`", color=0xff0000)
-    embed.set_author(name="Support Ticket")
-    await ctx.send(f"@{user_name}")
-    await ctx.send(embed=embed)
-    await asyncio.sleep(5)
-    await ctx.channel.delete()
 
 @client.command()
 async def suggest(ctx, *,args=None):
@@ -905,6 +831,142 @@ async def count(ctx):
         json.dump(data, f)
     await ctx.send(int(new_total))
 
+
+
+
+
+
+# -- Ticket System -- #
+
+
+@client.command(aliases=['new'])
+async def ticket(ctx, *,args=None):
+    author = ctx.author.name
+    author_id = ctx.author.id
+    author_test = ctx.author
+    author_dm = client.get_user(author_id)
+    guild = ctx.guild
+    author_name = str(author.lower())
+
+    def check_react(reaction, user):
+        return str(reaction.emoji) in ["⚔️", "🦸", "😡", "🐛", "💸"] and user != client.user
+    
+    await ctx.channel.purge(limit=1)
+    category_id = discord.utils.get(guild.categories, name="Tickets")
+
+    channel = await category_id.create_text_channel(f'{author}')
+    await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+
+    embed=discord.Embed(title=f"Support Ticket", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! Please select the issue you are having with \nClaim faction Leader Role! ⚔️\nNeed in game support? 🦸\nReport Staff abuse 😡 \nBug report 🐛 \nBuycraft issue 💸")
+    await channel.send(f"<@{author_id}>")
+    msg = await channel.send(embed=embed)
+    await msg.add_reaction("⚔️")
+    await msg.add_reaction("🦸")
+    await msg.add_reaction("😡")
+    await msg.add_reaction("🐛")
+    await msg.add_reaction("💸")
+    reaction, user = await client.wait_for('reaction_add', timeout = 200, check=check_react)
+    
+    if(str(reaction.emoji) == "⚔️"):
+        embed=discord.Embed(title="Faction Leader", description="You have been given Faction Leader role. \nIf you don't need anything else please do `-close`")
+        role = discord.utils.get(author_test.guild.roles, name="Faction Leader")
+        await Member.add_roles(author_test, role)
+        await channel.send(f"<@{author_id}>")
+        await channel.send(embed=embed)
+
+    elif(str(reaction.emoji) == "🦸"):
+        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+        await asyncio.sleep(2)
+        await support_channel.delete()
+
+        category_id = discord.utils.get(guild.categories, name="Live Support")
+        channel = await category_id.create_text_channel(f'{author}')
+        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+        embed=discord.Embed(title="Live Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        await channel.send(f"<@{author_id}>")
+        await channel.send(embed=embed)
+        tag = await channel.send("<@700770889330851920>")
+        await asyncio.sleep(2)
+        await tag.delete()
+
+    elif(str(reaction.emoji) == "😡"):
+        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+        await asyncio.sleep(2)
+        await support_channel.delete()
+
+        category_id = discord.utils.get(guild.categories, name="staff abuse")
+        channel = await category_id.create_text_channel(f'{author}')
+        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+        embed=discord.Embed(title="Staff Abuse", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        await channel.send(f"<@{author_id}>")
+        await channel.send(embed=embed)
+        tag = await channel.send("<@700770889330851920>")
+        await asyncio.sleep(2)
+        await tag.delete()
+
+    elif(str(reaction.emoji) == "🐛"):
+        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+        await asyncio.sleep(2)
+        await support_channel.delete()
+
+        category_id = discord.utils.get(guild.categories, name="Bug reports")
+        channel = await category_id.create_text_channel(f'{author}')
+        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+        embed=discord.Embed(title="Bug reports", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        await channel.send(f"<@{author_id}>")
+        await channel.send(embed=embed)
+        tag = await channel.send("<@700770889330851920>")
+        await asyncio.sleep(2)
+        await tag.delete()
+
+    elif(str(reaction.emoji) == "💸"):
+        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+        await asyncio.sleep(2)
+        await support_channel.delete()
+
+        category_id = discord.utils.get(guild.categories, name="buycraft help")
+        channel = await category_id.create_text_channel(f'{author}')
+        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+        embed=discord.Embed(title="Buycraft Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        await channel.send(f"<@{author_id}>")
+        await channel.send(embed=embed)
+        tag = await channel.send("<@700770889330851920>")
+        await asyncio.sleep(2)
+        await tag.delete()
+
+
+
+@client.command()
+async def close(ctx):
+    author2 = ctx.author.name
+    author_id = ctx.author.id
+    guild = ctx.guild
+    author = str(author2.lower())
+    
+    support_channel = discord.utils.get(guild.channels, name=author, type=discord.ChannelType.text)
+    embed=discord.Embed(title=f"Ticket closing {author}", description=f"If you need any more help please do `-ticket` ", color=0xff0000)
+    embed.set_author(name="Support Ticket")
+    await ctx.send(f"<@{author_id}>")
+    await ctx.send(embed=embed)
+    await asyncio.sleep(5)
+    await support_channel.delete()
+    
+@client.command()
+@has_permissions(manage_channels=True)
+async def close_s(ctx, user_name:discord.Member):
+    author = ctx.author.name
+    author_id = ctx.author.id
+    author_DM = client.get_user(author_id)
+    guild = ctx.guild
+
+    channel_id = discord.utils.get(guild.channels, name=user_name)
+    channel = client.get_channel(channel_id)
+    embed=discord.Embed(title=f"{user_name} Deleting Ticket", description=f"If you need any more assistance please do `-ticket`", color=0xff0000)
+    embed.set_author(name="Support Ticket")
+    await ctx.send(f"@{user_name}")
+    await ctx.send(embed=embed)
+    await asyncio.sleep(5)
+    await ctx.channel.delete()
 
 
 
