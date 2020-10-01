@@ -59,7 +59,7 @@ Mod Logs
 '''
 
 client = commands.Bot(command_prefix="-")
-with open("/root/DiscordGit/Corrupt/token.json", "r") as f:
+with open("/home/leo/ftp/Discord/Corrupt/token.json", "r") as f:
     config = json.load(f)
 token = str(config['Token'])
 Token = token
@@ -135,12 +135,12 @@ async def on_message(message):
 async def on_message_delete(message):
     # Message = message.content
     # Author = message.author.mention
-    with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "r") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_snipe.json", "r") as f:
         data = json.load(f)
     msg = message.content
     authr = message.author.mention
     data['message'] = f"**Message**: {msg} \n**Author:** {authr}"
-    with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "w") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_snipe.json", "w") as f:
         json.dump(data, f)
 
 
@@ -177,7 +177,7 @@ async def help(ctx):
     embed.add_field(name="`-adminhelp`", value="To open Staff help menu", inline=False)
     await ctx.send(embed=embed)
 
-@client.command()
+@client.command(pass_context=True)
 @has_permissions(manage_messages=True)
 async def adminhelp(ctx):
     embed=discord.Embed(title="Help Menu", description="Version 1.0 \nPrefix `-`\n<> are place holders")
@@ -224,7 +224,7 @@ async def warn(ctx, user_name:discord.Member, *,args=None):
     user_id = user_name.id
     userid = str(user_id)
 
-    with open("/root/DiscordGit/Corrupt/cogs/db_ticket.json", "r") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_ticket.json", "r") as f:
         users = json.load(f)
     target = userid
     if not f'{target}' in users:
@@ -240,7 +240,7 @@ async def warn(ctx, user_name:discord.Member, *,args=None):
         embed=discord.Embed(title="Warning", description=f"**Warned:** {user_name} \n**Reason:** {args} \n**Total Warns:** {warnam} \n**Warned By:** {author}", color=0xff0000)
         await ctx.send(f"<@{userid}>")
         await ctx.send(embed=embed)
-    with open("/root/DiscordGit/Corrupt/cogs/db_ticket.json", "w") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_ticket.json", "w") as f:
         json.dump(users, f)
 
 @client.command(pass_context=True)
@@ -448,7 +448,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
 
     if(str(rank.lower()) == "helper"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Helper \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Helper** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Helper)
@@ -463,7 +463,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         
     if(str(rank.lower()) == "jr mod"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Jr Moderator \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **JR Moderator** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Jr_Moderator)
@@ -478,7 +478,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         
     if(str(rank.lower()) == "mod"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Moderator \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Moderator** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Moderator)
@@ -493,7 +493,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         
     if(str(rank.lower()) == "sr mod"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Sr Moderator \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Sr Moderator** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Sr_Moderator)
@@ -509,7 +509,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
     if(str(rank.lower()) == "admin"):
         await ctx.channel.purge(limit=1)
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Admin \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Admin** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await Member.add_roles(user_name, Administrator)
         await Member.remove_roles(user_name, Helper)
@@ -522,7 +522,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         
     if(str(rank.lower()) == "trial sr mod"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Sr Moderator \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Trial Sr Moderator** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Sr_Moderator)
@@ -537,7 +537,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         
     if(str(rank.lower()) == "trial mod"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Moderator \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Trial Moderator** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Moderator)
@@ -552,7 +552,7 @@ async def promote(ctx, user_name:discord.Member, *,args=None):
         
     if(str(rank.lower()) == "trial jr mod"):
         promotion_channel = client.get_channel(725645441357840406)
-        embed=discord.Embed(title="Promotion", description=f"Congratulations {user_name}\n\n**New Rank:** Trial Jr Moderator \n**Promotor:** {author}")
+        embed=discord.Embed(title=f"Promotion [{datetime.date}]", description=f"<@{user_name.id}> has been promoted to **Trial Jr Moderator** by <@{author_id}>")
         await promotion_channel.send(embed=embed)
         await ctx.channel.purge(limit=1)
         await Member.add_roles(user_name, Trial_Jr_Moderator)
@@ -709,14 +709,14 @@ async def demote(ctx, user_name:discord.Member, *,args=None):
         embed=discord.Embed(title="Promotion/Demotion Help Menu", description="Command is `-promote/demote @user <rank>` \n\n\nhelper \njr mod \nmod \nsr mod \nadmin \ntrial sr mod \ntrial mod \ntrial jr mod")
         await ctx.send(embed=embed)
 
-@client.command()
+@client.command(pass_context=True)
 @has_permissions(administrator=True)
 async def strike(ctx, faction, *,args):
     author = ctx.message.author.name
     author_id = ctx.message.author.id
     strike_channel = client.get_channel(727435494555910265)
 
-    with open("/root/DiscordGit/Corrupt/cogs/db_faction.json", "r") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_faction.json", "r") as f:
         factions = json.load(f)
     target = str(faction)
     if not f'{target}' in factions:
@@ -730,10 +730,10 @@ async def strike(ctx, faction, *,args):
         factions[f'{target}'] = warnam
         embed=discord.Embed(title="Faction Strike", description=f"**Striked:** {faction} \n**Reason:** {args} \n**Total Strikes:** {warnam} \n**Strike By:** {author}", color=0xff0000)
         await strike_channel.send(embed=embed)
-    with open("/root/DiscordGit/Corrupt/cogs/db_faction.json", "w") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_faction.json", "w") as f:
         json.dump(factions, f)
 
-@client.command(aliases=['report', 'Sticket', 'Report'])
+@client.command(aliases=['report', 'Sticket', 'Report'], pass_context=True)
 @has_permissions(manage_messages=True)
 async def sticket(ctx, *,args=None):
     author = ctx.author.name
@@ -796,7 +796,7 @@ async def sticket(ctx, *,args=None):
 
 @client.command()
 async def snipe(ctx):
-    with open("/root/DiscordGit/Corrupt/cogs/db_snipe.json", "r") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_snipe.json", "r") as f:
         data = json.load(f)
     snipe = data["message"]
     embed=discord.Embed(title="Message Snipe", description=f"**Latest Deleted Message** \n\n{snipe}")
@@ -821,13 +821,13 @@ async def fire(ctx, user_name:discord.Member, *,args=None):
 
 @client.command()
 async def count(ctx):
-    with open("/root/DiscordGit/Corrupt/cogs/db_count.json", "r") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_count.json", "r") as f:
         data = json.load(f)
     old_number = int(data['Count'])
     new_total = old_number + 1
     data['Count'] = {}
     data['Count'] = int(new_total)
-    with open("/root/DiscordGit/Corrupt/cogs/db_count.json", "w") as f:
+    with open("/home/leo/ftp/Discord/Corrupt/cogs/db_count.json", "w") as f:
         json.dump(data, f)
     await ctx.send(int(new_total))
 
@@ -838,6 +838,101 @@ async def count(ctx):
 
 # -- Ticket System -- #
 
+
+#@client.command(aliases=['new'])
+#async def ticket(ctx, *,args=None):
+#    author = ctx.author.name
+#    author_id = ctx.author.id
+#    author_test = ctx.author
+#    author_dm = client.get_user(author_id)
+#    guild = ctx.guild
+#    author_name = str(author.lower())
+
+#    def check_react(reaction, user):
+#        return str(reaction.emoji) in ["⚔️", "🦸", "😡", "🐛", "💸"] and user != client.user
+    
+#    await ctx.channel.purge(limit=1)
+#    category_id = discord.utils.get(guild.categories, name="Tickets")
+
+#    channel = await category_id.create_text_channel(f'{author}')
+#    await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+
+#    embed=discord.Embed(title=f"Support Ticket", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! Please select the issue you are having with \nClaim faction Leader Role! ⚔️\nNeed in game support? 🦸\nReport Staff abuse 😡 \nBug report 🐛 \nBuycraft issue 💸")
+#    await channel.send(f"<@{author_id}>")
+#    msg = await channel.send(embed=embed)
+#    await msg.add_reaction("⚔️")
+#    await msg.add_reaction("🦸")
+#    await msg.add_reaction("😡")
+#    await msg.add_reaction("🐛")
+#    await msg.add_reaction("💸")
+#    reaction, user = await client.wait_for('reaction_add', timeout = 200, check=check_react)
+    
+#    if(str(reaction.emoji) == "⚔️"):
+#        embed=discord.Embed(title="Faction Leader", description="You have been given Faction Leader role. \nIf you don't need anything else please do `-close`")
+#        role = discord.utils.get(author_test.guild.roles, name="Faction Leader")
+#        await Member.add_roles(author_test, role)
+#        await channel.send(f"<@{author_id}>")
+#        await channel.send(embed=embed)
+
+#    elif(str(reaction.emoji) == "🦸"):
+#        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+#        await asyncio.sleep(2)
+#        await support_channel.delete()
+
+#        category_id = discord.utils.get(guild.categories, name="Live Support")
+#        channel = await category_id.create_text_channel(f'{author}')
+#        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+#        embed=discord.Embed(title="Live Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+#        await channel.send(f"<@{author_id}>")
+#        await channel.send(embed=embed)
+#        tag = await channel.send("<@700770889330851920>")
+#        await asyncio.sleep(2)
+#        await tag.delete()
+
+#    elif(str(reaction.emoji) == "😡"):
+#        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+#        await asyncio.sleep(2)
+#        await support_channel.delete()
+
+#        category_id = discord.utils.get(guild.categories, name="staff abuse")
+#        channel = await category_id.create_text_channel(f'{author}')
+#        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+#        embed=discord.Embed(title="Staff Abuse", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+#        await channel.send(f"<@{author_id}>")
+#        await channel.send(embed=embed)
+#        tag = await channel.send("<@700770889330851920>")
+#        await asyncio.sleep(2)
+#        await tag.delete()
+
+#    elif(str(reaction.emoji) == "🐛"):
+#        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+#        await asyncio.sleep(2)
+#        await support_channel.delete()
+
+#        category_id = discord.utils.get(guild.categories, name="Bug reports")
+#        channel = await category_id.create_text_channel(f'{author}')
+#        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+#        embed=discord.Embed(title="Bug reports", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+#        await channel.send(f"<@{author_id}>")
+#        await channel.send(embed=embed)
+#        tag = await channel.send("<@700770889330851920>")
+#        await asyncio.sleep(2)
+#        await tag.delete()
+
+#    elif(str(reaction.emoji) == "💸"):
+#        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
+#        await asyncio.sleep(2)
+#        await support_channel.delete()
+
+#        category_id = discord.utils.get(guild.categories, name="buycraft help")
+#        channel = await category_id.create_text_channel(f'{author}')
+#        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
+#        embed=discord.Embed(title="Buycraft Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+#        await channel.send(f"<@{author_id}>")
+#        await channel.send(embed=embed)
+#        tag = await channel.send("<@700770889330851920>")
+#        await asyncio.sleep(2)
+#        await tag.delete()
 
 @client.command(aliases=['new'])
 async def ticket(ctx, *,args=None):
@@ -860,80 +955,55 @@ async def ticket(ctx, *,args=None):
     embed=discord.Embed(title=f"Support Ticket", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! Please select the issue you are having with \nClaim faction Leader Role! ⚔️\nNeed in game support? 🦸\nReport Staff abuse 😡 \nBug report 🐛 \nBuycraft issue 💸")
     await channel.send(f"<@{author_id}>")
     msg = await channel.send(embed=embed)
-    await msg.add_reaction("⚔️")
-    await msg.add_reaction("🦸")
-    await msg.add_reaction("😡")
-    await msg.add_reaction("🐛")
-    await msg.add_reaction("💸")
+    await msg.add_reaction("<:factions:761278040365596733>")
+    await msg.add_reaction("<:skyblock:761278041358860339>")
+    await msg.add_reaction("<:unban:761278039048454194>")
     reaction, user = await client.wait_for('reaction_add', timeout = 200, check=check_react)
     
-    if(str(reaction.emoji) == "⚔️"):
-        embed=discord.Embed(title="Faction Leader", description="You have been given Faction Leader role. \nIf you don't need anything else please do `-close`")
-        role = discord.utils.get(author_test.guild.roles, name="Faction Leader")
-        await Member.add_roles(author_test, role)
-        await channel.send(f"<@{author_id}>")
-        await channel.send(embed=embed)
-
-    elif(str(reaction.emoji) == "🦸"):
+    if(str(reaction.emoji) == "<:factions:761278040365596733>"):
         support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
         await asyncio.sleep(2)
         await support_channel.delete()
 
-        category_id = discord.utils.get(guild.categories, name="Live Support")
+        category_id = discord.utils.get(guild.categories, name="Factions General Tickets")
         channel = await category_id.create_text_channel(f'{author}')
         await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
-        embed=discord.Embed(title="Live Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        embed=discord.Embed(title="Factions Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
         await channel.send(f"<@{author_id}>")
         await channel.send(embed=embed)
         tag = await channel.send("<@700770889330851920>")
         await asyncio.sleep(2)
         await tag.delete()
 
-    elif(str(reaction.emoji) == "😡"):
+    elif(str(reaction.emoji) == "<:skyblock:761278041358860339>"):
         support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
         await asyncio.sleep(2)
         await support_channel.delete()
 
-        category_id = discord.utils.get(guild.categories, name="staff abuse")
+        category_id = discord.utils.get(guild.categories, name="Buycraft Tickets")
         channel = await category_id.create_text_channel(f'{author}')
         await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
-        embed=discord.Embed(title="Staff Abuse", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        embed=discord.Embed(title="BuyCraft Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
         await channel.send(f"<@{author_id}>")
         await channel.send(embed=embed)
         tag = await channel.send("<@700770889330851920>")
         await asyncio.sleep(2)
         await tag.delete()
 
-    elif(str(reaction.emoji) == "🐛"):
+    elif(str(reaction.emoji) == "<:unban:761278039048454194>"):
         support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
         await asyncio.sleep(2)
         await support_channel.delete()
 
-        category_id = discord.utils.get(guild.categories, name="Bug reports")
+        category_id = discord.utils.get(guild.categories, name="Other Tickets")
         channel = await category_id.create_text_channel(f'{author}')
         await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
-        embed=discord.Embed(title="Bug reports", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
+        embed=discord.Embed(title="Other Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
         await channel.send(f"<@{author_id}>")
         await channel.send(embed=embed)
         tag = await channel.send("<@700770889330851920>")
         await asyncio.sleep(2)
         await tag.delete()
-
-    elif(str(reaction.emoji) == "💸"):
-        support_channel = discord.utils.get(guild.channels, name=author_name, type=discord.ChannelType.text)
-        await asyncio.sleep(2)
-        await support_channel.delete()
-
-        category_id = discord.utils.get(guild.categories, name="buycraft help")
-        channel = await category_id.create_text_channel(f'{author}')
-        await channel.set_permissions(ctx.author, read_messages=True, send_messages=True, read_message_history=True, add_reactions=True)
-        embed=discord.Embed(title="Buycraft Support", description=f"Hey {author}, please wait patiently for a member on our staff \nteam to get back to you! While you are waiting please describe what you need help \nwith to the best of you're ability.")
-        await channel.send(f"<@{author_id}>")
-        await channel.send(embed=embed)
-        tag = await channel.send("<@700770889330851920>")
-        await asyncio.sleep(2)
-        await tag.delete()
-
 
 
 @client.command()
@@ -951,7 +1021,7 @@ async def close(ctx):
     await asyncio.sleep(5)
     await support_channel.delete()
     
-@client.command()
+@client.command(pass_context=True)
 @has_permissions(manage_channels=True)
 async def close_s(ctx, user_name:discord.Member):
     author = ctx.author.name
@@ -968,7 +1038,21 @@ async def close_s(ctx, user_name:discord.Member):
     await asyncio.sleep(5)
     await ctx.channel.delete()
 
+@client.command(pass_context=True)
+@has_permissions(administrator=True)
+async def announcement(ctx, *,args):
+    bot_icon = client.get_user(725945735639597127)
+    embed=discord.embed(title="Server Announcement", description=args, color=0xff0000)
+    embed.set_author(name="Corrupt Network", icon_url=bot_icon.avatar_url)
+    embed.set_footer(text=f"{ctx.author.name}", icon_url=ctx.author.avatar_url)
+    await ctx.send(embed=embed)
 
+@client.command(pass_context=True)
+@has_permissions(manage_channel=True)
+async def lock(ctx, args=None):
+    await asyncio.sleep(2)
+    embed=discord.Embed(title="Channel Lockdown", description=f"**Lockdown By:** <@{ctx.author.id}> \n**Reason:** {args}")
+    await ctx.send(embed=embed)
 
 
 client.loop.create_task(ad())
