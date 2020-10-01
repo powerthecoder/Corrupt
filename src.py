@@ -1039,7 +1039,7 @@ async def close_s(ctx, user_name:discord.Member):
     await ctx.channel.delete()
 
 @client.command(pass_context=True)
-@has_permissions(administrator=True)
+@command.has_role("Senior Staff")
 async def announcement(ctx, *,args):
     bot_icon = client.get_user(725945735639597127)
     embed=discord.embed(title="Server Announcement", description=args, color=0xff0000)
@@ -1048,11 +1048,60 @@ async def announcement(ctx, *,args):
     await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
-@has_permissions(manage_channel=True)
+@command.has_role("Senior Staff")
 async def lock(ctx, args=None):
     await asyncio.sleep(2)
     embed=discord.Embed(title="Channel Lockdown", description=f"**Lockdown By:** <@{ctx.author.id}> \n**Reason:** {args}")
     await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
+@command.has_role("Senior Staff")
+async def factionleader(ctx, user_name:discord.Member, *,args=None):
+    if (args == None):
+        msg = await ctx.send("You need to add a faction name")
+        await asyncio.sleep(5)
+        await msg.delete()
+        await ctx.message.delete()
+    else:
+        embed=discord.embed(title="Faction Leader", description=f"**Faction Leader:** <@{user_name.id}> \n**Role Given By:** <@{ctx.author.id}>")
+        try:
+            role = discord.utils.get(user_name.guild.roles, name="Faction Leader")
+            await Member.add_roles(user_name, role)
+            await user_name.edit(nick=f"{user_name.name} | {args}")
+            await ctx.send(embed=embed)
+        except:
+            await ctx.send(f"soemthing happened. Couldnt add role to {user_name}")
+
+@client.command(pass_cotnext=True)
+@command.has_role("Senior Staff")
+async def factionadd(ctx, args=None):
+    if (args == None):
+        msg = await ctx.send("You need to add a faction name")
+        await asyncio.sleep(5)
+        await msg.delete()
+        await ctx.message.delete()
+    else:
+        with open('/home/leo/ftp/Discord/Corrupt/faction_db.json', "r") as f:
+            data = json.load(f)
+        data[f'{args}'] = {}
+        data[f'{args}'] = args
+        with open('/home/leo/ftp/Discord/Corrupt/faction_db.json', "w") as f:
+            json.dump(data, f)
+        with open('/home/leo/ftp/Discord/Corrupt/faction_db.json', "r") as f:
+            data = json.load(f)
+        x = 0
+        faction_list = []
+        for i in data:
+            x += 1
+            faction_list.append(data)
+        embed=discord.Embed(title=f"Playing List [Factions]", description=
+        f"Bellow you can find all the factions that have signed up (if you would like to sign up create a ticket \n\n **There are {x} Factions Playing this seasson**\n**Factions List:**"
+        )
+        embed.add_field(name=faction_list, value="  ")
+        await ctx.send(embed=embed)
+
+
+
 
 
 client.loop.create_task(ad())
