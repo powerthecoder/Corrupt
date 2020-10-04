@@ -16,6 +16,7 @@ from discord.ext import tasks
 from discord import Member
 from discord.ext.commands import has_permissions
 from discord.ext.commands import MissingPermissions
+from discord.ext.commands import has_role
 from discord.utils import find
 from discord.utils import get
 import asyncio
@@ -1039,23 +1040,23 @@ async def close_s(ctx, user_name:discord.Member):
     await ctx.channel.delete()
 
 @client.command(pass_context=True)
-@command.has_role("Senior Staff")
+@has_role("Senior Staff")
 async def announcement(ctx, *,args):
     bot_icon = client.get_user(725945735639597127)
-    embed=discord.embed(title="Server Announcement", description=args, color=0xff0000)
+    embed=discord.Embed(title="Server Announcement", description=args, color=0xff0000)
     embed.set_author(name="Corrupt Network", icon_url=bot_icon.avatar_url)
     embed.set_footer(text=f"{ctx.author.name}", icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
-@command.has_role("Senior Staff")
+@has_role("Senior Staff")
 async def lock(ctx, args=None):
     await asyncio.sleep(2)
     embed=discord.Embed(title="Channel Lockdown", description=f"**Lockdown By:** <@{ctx.author.id}> \n**Reason:** {args}")
     await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
-@command.has_role("Senior Staff")
+@has_role("Senior Staff")
 async def factionleader(ctx, user_name:discord.Member, *,args=None):
     if (args == None):
         msg = await ctx.send("You need to add a faction name")
@@ -1073,7 +1074,7 @@ async def factionleader(ctx, user_name:discord.Member, *,args=None):
             await ctx.send(f"soemthing happened. Couldnt add role to {user_name}")
 
 @client.command(pass_cotnext=True)
-@command.has_role("Senior Staff")
+@has_role("Senior Staff")
 async def factionadd(ctx, args=None):
     if (args == None):
         msg = await ctx.send("You need to add a faction name")
@@ -1094,10 +1095,8 @@ async def factionadd(ctx, args=None):
         for i in data:
             x += 1
             faction_list.append(data)
-        embed=discord.Embed(title=f"Playing List [Factions]", description=
-        f"Bellow you can find all the factions that have signed up (if you would like to sign up create a ticket \n\n **There are {x} Factions Playing this seasson**\n**Factions List:**"
-        )
-        embed.add_field(name=faction_list, value="  ")
+        embed=discord.Embed(title=f"Playing List [Factions]", description=f"Bellow you can find all the factions that have signed up (if you would like to sign up create a ticket \n\n **There are {x} Factions Playing this seasson**")
+        embed.add_field(name="Faction List", value=faction_list, inline=False)
         await ctx.send(embed=embed)
 
 
